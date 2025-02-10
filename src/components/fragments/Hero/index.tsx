@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react";
 import { Search } from "lucide-react";
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
@@ -8,7 +8,7 @@ import Link from "next/link";
 const Hero = () => {
   const [query, setQuery] = useState<string>("");
   const router = useRouter();
-  const { data } = useSession();
+  // const { data } = useSession();
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,7 +28,7 @@ const Hero = () => {
             <div className="space-y-6 lg:w-full lg:space-y-10">
               {/* Title Section */}
               <div className="mx-auto text-center lg:max-w-5xl lg:pt-0">
-                <h1 className="font-italiana mb-6 text-5xl font-normal text-yellow-600 sm:text-6xl md:text-7xl lg:text-7xl">
+                <h1 className="mb-6 font-italiana text-5xl font-normal text-yellow-600 sm:text-6xl md:text-7xl lg:text-7xl">
                   Read the books Everyone’s talking about
                 </h1>
                 <p className="mt-4 px-5 text-sm text-neutral-400 lg:px-20 lg:text-lg">

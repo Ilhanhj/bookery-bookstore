@@ -19,15 +19,14 @@ import {
 } from "@/components/ui/dialog";
 import { saveCartToFirebase } from "@/lib/firebase/service";
 import { addToCart } from "@/redux/slices/cartSlice";
-import { RootState } from "@/redux/store";
+
 import { BooksDetails } from "@/types/BooksDetailProps.type";
-import { CartItem } from "@/types/CartItemProps";
 
 import { ChevronDown, Eye, ShoppingBasket } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const BookDetailsViews = ({ books }: { books: BooksDetails }) => {
   const shortenDescription = (description: string, maxLength: number) => {

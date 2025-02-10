@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import SeparatorElement from "@/components/elements/SeparatorElement";
 import BestSellersBooksCarousel from "@/components/fragments/BestSellersBooksCarousel";
 import NewsLetters from "@/components/fragments/NewsLetters";

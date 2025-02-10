@@ -51,7 +51,7 @@ const authOptions: NextAuthOptions = {
     signIn: "/Auth/Login",
   },
   callbacks: {
-    async jwt({ token, account, profile, user }) {
+    async jwt({ token, account, user }) {
       if (account?.provider === "credentials") {
         token.email = user.email;
         token.fullname = user.fullname;

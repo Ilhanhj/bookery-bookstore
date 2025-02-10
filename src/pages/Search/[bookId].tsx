@@ -7,7 +7,8 @@ import { useRouter } from "next/router";
 
 const BookDetails = ({ books }: { books: BooksDetails }) => {
   const router = useRouter();
-  const { bookId } = router.query;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+const { bookId } = router.query;
 
   return (
     <div className="mx-auto min-h-screen max-w-6xl lg:mt-16">
