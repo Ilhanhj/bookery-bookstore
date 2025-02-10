@@ -28,7 +28,7 @@ const authOptions: NextAuthOptions = {
         };
 
         // Assign as user
-        const user: any = await login({ email });
+        const user: unknown = await login({ email });
 
         if (user) {
           const passwordConfirm = await compare(password, user.password);
@@ -68,7 +68,7 @@ const authOptions: NextAuthOptions = {
 
         await signInWithGoogle(
           data,
-          (result: { status: boolean; message: string; data: any }) => {
+          (result: { status: boolean; message: string; data: unknown }) => {
             if (result.status) {
               token.fullname = result.data.fullname;
               token.email = result.data.email;
@@ -84,7 +84,7 @@ const authOptions: NextAuthOptions = {
     },
 
     // token(user form output) dikirim ke session
-    async session({ session, token }: any) {
+    async session({ session, token }: unknown) {
       if ("email" in token) {
         session.user.email = token.email;
       }

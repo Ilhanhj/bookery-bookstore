@@ -6,7 +6,7 @@ import { CartItem } from "@/types/CartItemProps";
 import { saveCartToFirebase } from "@/lib/firebase/service";
 import { useEffect } from "react";
 
-const TableCart = ({ id }: any) => {
+const TableCart = ({ id }) => {
   const cartItems = useSelector((state: RootState) => state.cart.items);
 
   useEffect(() => {

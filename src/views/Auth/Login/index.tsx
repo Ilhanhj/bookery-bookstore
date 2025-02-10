@@ -21,9 +21,9 @@ function LoginViews() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const { push, query } = useRouter();
-  const callbackUrl: any = query.callbackUrl || "/";
+  const callbackUrl: unknown = query.callbackUrl || "/";
 
-  const handleSubmit = async (event: any) => {
+  const handleSubmit = async (event: unknown) => {
     event.preventDefault();
     setError("");
     setIsLoading(true);
@@ -42,7 +42,7 @@ function LoginViews() {
         setIsLoading(false);
         setError("Email or Password is incorrect");
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       setIsLoading(false);
       setError("Email or Password is incorrect");
     }

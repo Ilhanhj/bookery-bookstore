@@ -24,7 +24,7 @@ export async function register(
     password: string;
     role?: string;
   },
-  callback: Function,
+  callback: unknown,
 ) {
   const q = query(
     collection(firestore, "users"),
@@ -72,14 +72,14 @@ export async function login(userData: { email: string }) {
   }
 }
 
-export async function signInWithGoogle(userData: any, callback: any) {
+export async function signInWithGoogle(userData: unknown, callback: unknown) {
   const q = query(
     collection(firestore, "users"),
     where("email", "==", userData.email),
   );
 
   const snapshot = await getDocs(q);
-  const data: any = snapshot.docs.map((doc) => ({
+  const data: unknown = snapshot.docs.map((doc) => ({
     id: doc.id,
     ...doc.data(),
   }));

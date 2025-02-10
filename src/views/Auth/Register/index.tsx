@@ -21,7 +21,7 @@ function RegisterViews() {
   const [error, setError] = useState("");
   const { push } = useRouter();
 
-  const handleSubmit = async (event: any) => {
+  const handleSubmit = async (event: unknown) => {
     event.preventDefault();
     const data = {
       email: event.target.email.value,
