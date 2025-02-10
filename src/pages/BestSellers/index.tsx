@@ -1,0 +1,65 @@
+import SeparatorElement from "@/components/elements/SeparatorElement";
+import SubTitleCategory from "@/components/elements/SubTitleCategory";
+import TitleCategory from "@/components/elements/TitleCategory";
+import BannerText from "@/components/fragments/BannerText";
+import CategorySidebar from "@/components/fragments/CategorySidebar";
+import NewsLetters from "@/components/fragments/NewsLetters";
+import { Book } from "@/types/BooksProps.type";
+import BestSellersViews from "@/views/BestSellersViews";
+
+const BestSellersPage = ({ books }: { books: Book[] }) => {
+  return (
+    <div className="bg-neutral-100">
+      {/* Hero Section */}
+      <div className="w-full bg-neutral-200 py-10 lg:py-20">
+        <div className="mx-auto text-center lg:w-full lg:ps-14 lg:text-left">
+          <TitleCategory textColor="text-emerald-800 lg:text-5xl">
+            Bestsellers
+          </TitleCategory>
+          <SubTitleCategory>
+            Discover the most popular books that everyone’s reading. From
+            timeless classics to modern masterpieces.
+          </SubTitleCategory>
+        </div>
+      </div>
+      {/* Best Sellers Books Section */}
+      <div className="flex w-full flex-col px-4 lg:flex-row">
+        <div className="w-auto lg:p-10">
+          <CategorySidebar />
+        </div>
+
+        <div className="grid grid-cols-2 gap-6 px-6 py-10 sm:grid-cols-2 lg:w-[75%] lg:grid-cols-4">
+          <BestSellersViews books={books} />
+        </div>
+      </div>
+      <SeparatorElement />
+      {/* Banner Section */}
+      <div className="lg:px-10">
+        <BannerText
+          title="How to ... bundle"
+          image="bg-[url('/assets/howtobundle.jpg')] bg-cover bg-center"
+        />
+      </div>{" "}
+      <SeparatorElement />
+      <NewsLetters />
+    </div>
+  );
+};
+
+export default BestSellersPage;
+
+export const getServerSideProps = async () => {
+  const apiKey = process.env.GOOGLE_BOOKS_API_KEY;
+
+  const res = await fetch(
+    `https://www.googleapis.com/books/v1/volumes?q=best+seller+fiction&filter=paid-ebooks&key=${apiKey}`,
+  );
+  const data = await res.json();
+
+  // If data.items exists, return it, otherwise return an empty array
+  return {
+    props: {
+      books: data.items || [], // safely accessing items array
+    },
+  };
+};
