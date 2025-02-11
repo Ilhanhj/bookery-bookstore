@@ -21,25 +21,31 @@ const authOptions: NextAuthOptions = {
       },
       // When Clicking Sign In
       async authorize(credentials) {
-        // Catch all input in the form
         const { email, password } = credentials as {
           email: string;
           password: string;
         };
 
-        // Assign as user
-        const user: unknown = await login({ email });
+        const user = await login({ email });
 
-        if (user) {
-          const passwordConfirm = await compare(password, user.password);
+        if (!user) return null;
 
-          if (passwordConfirm) {
-            return user;
-          }
-          return null;
-        } else {
+        // 🛠️ Pastikan user memiliki password sebelum dibandingkan
+        if (!user.password) {
+          console.error("User registered with Google, password is missing");
           return null;
         }
+
+        const passwordConfirm = await compare(password, user.password);
+
+        if (!passwordConfirm) return null;
+
+        return {
+          id: user.id,
+          email: user.email,
+          fullname: user.fullname,
+          role: user.role,
+        };
       },
     }),
     GoogleProvider({

@@ -223,7 +223,12 @@ export async function login(userData: { email: string }) {
   const snapshot = await getDocs(q);
   const data = snapshot.docs.map((doc) => ({
     id: doc.id,
-    ...doc.data(),
+    ...(doc.data() as {
+      email: string;
+      fullname: string;
+      password?: string;
+      role: string;
+    }), // ✅ Tambahkan `password?`
   }));
 
   return data.length > 0 ? data[0] : null;
@@ -241,12 +246,12 @@ export async function signInWithGoogle(
   const snapshot = await getDocs(q);
   const data = snapshot.docs.map((doc) => ({
     id: doc.id,
-    ...doc.data(),
+    ...(doc.data() as UserData), // ✅ FIX: Cast ke UserData
   }));
 
   try {
     if (data.length > 0) {
-      userData.role = data[0].role;
+      userData.role = data[0].role; // ✅ Sekarang tidak error
       await updateDoc(doc(firestore, "users", data[0].id), userData);
     } else {
       userData.role = "member";
