@@ -6,7 +6,12 @@ import { CartItem } from "@/types/CartItemProps";
 import { saveCartToFirebase } from "@/lib/firebase/service";
 import { useEffect } from "react";
 
-const TableCart = ({ id }: unknown) => {
+// ✅ Definisikan tipe untuk props
+interface TableCartProps {
+  id: string; // atau `id?: string;` jika opsional
+}
+
+const TableCart = ({ id }: TableCartProps) => {
   const cartItems = useSelector((state: RootState) => state.cart.items);
 
   useEffect(() => {

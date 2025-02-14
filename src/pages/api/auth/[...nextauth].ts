@@ -1,10 +1,12 @@
 import { login, signInWithGoogle } from "@/lib/firebase/service";
 import { compare } from "bcrypt";
-import NextAuth, { NextAuthOptions } from "next-auth";
+import NextAuth, { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
+import { Session } from "next-auth";
+import { JWT } from "next-auth/jwt";
 
-const authOptions: NextAuthOptions = {
+const authOptions: AuthOptions = {
   session: {
     strategy: "jwt",
   },
@@ -74,7 +76,7 @@ const authOptions: NextAuthOptions = {
 
         await signInWithGoogle(
           data,
-          (result: { status: boolean; message: string; data: unknown }) => {
+          (result: { status: boolean; message: string; data }) => {
             if (result.status) {
               token.fullname = result.data.fullname;
               token.email = result.data.email;
@@ -90,21 +92,21 @@ const authOptions: NextAuthOptions = {
     },
 
     // token(user form output) dikirim ke session
-    async session({ session, token }: unknown) {
+    async session({ session, token }: { session: Session; token: JWT }) {
       if ("email" in token) {
         session.user.email = token.email;
       }
 
       if ("fullname" in token) {
-        session.user.fullname = token.fullname;
+        session.user.fullname = token.fullname as string;
       }
 
       if ("role" in token) {
-        session.user.role = token.role;
+        session.user.role = token.role as string;
       }
 
       if ("image" in token) {
-        session.user.image = token.image;
+        session.user.image = token.image as string;
       }
 
       return session;
