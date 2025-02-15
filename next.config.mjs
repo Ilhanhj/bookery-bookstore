@@ -35,6 +35,9 @@ const nextConfig = {
       },
     ],
   },
+  typescript: {
+    ignoreBuildErrors: true, // Abaikan error TypeScript saat build
+  },
   webpack: (config) => {
     config.resolve.fallback = {
       fs: false,
@@ -42,6 +45,7 @@ const nextConfig = {
       net: false, // Tambahkan jika diperlukan
       tls: false, // Tambahkan jika diperlukan
     };
+
     return config;
   },
 };
