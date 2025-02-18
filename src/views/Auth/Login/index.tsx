@@ -23,28 +23,29 @@ function LoginViews() {
   const { push, query } = useRouter();
   const callbackUrl: unknown = query.callbackUrl || "/";
 
-  const handleSubmit = async (event: unknown) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError("");
     setIsLoading(true);
 
     try {
+      const form = event.currentTarget;
       const res = await signIn("credentials", {
         redirect: false,
-        email: event.target.email.value,
-        password: event.target.password.value,
-        callbackUrl,
+        email: form.email.value,
+        password: form.password.value,
       });
+
       if (!res?.error) {
         setIsLoading(false);
-        push(callbackUrl);
+        push("/");
       } else {
         setIsLoading(false);
         setError("Email or Password is incorrect");
       }
-    } catch (error: unknown) {
+    } catch (error) {
       setIsLoading(false);
-      setError("Email or Password is incorrect");
+      setError("Something went wrong");
     }
   };
 
@@ -102,7 +103,6 @@ function LoginViews() {
           variant="outline"
           onClick={() =>
             signIn("google", {
-              callbackUrl,
               redirect: false,
             })
           }
